@@ -1,0 +1,6 @@
+name = "Jinja"
+grammar = "jinja"
+path_suffixes = ["jinja", "jinja2", "j2"]
+block_comment = ["{# ", " #}"]
+prettier_parser_name = "jinja-template"
+prettier_plugins = ["prettier-plugin-jinja-template"]
