@@ -3,3 +3,5 @@ Cargo.lock
 grammars
 extension.wasm
 tests
+pyproject.toml
+.zed/

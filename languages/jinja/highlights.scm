@@ -1,5 +1,4 @@
-; from https://github.com/cathaysia/tree-sitter-jinja/blob/41b17a33f335130ce9861fd21bffeb88fd768ef4/tree-sitter-jinja/queries/highlights.scm
-; changes: removed @spell capturing node for comment block
+; adapted from https://github.com/cathaysia/tree-sitter-jinja/blob/41b17a33f335130ce9861fd21bffeb88fd768ef4/tree-sitter-jinja/queries/highlights.scm
 
 [
   "{{"
@@ -14,44 +13,30 @@
   "+%}"
   "-%}"
   "%}"
-] @keyword.directive
-
-(string_literal) @string
-
-(number_literal) @number
-
-(float_literal) @number.float
-
-(boolean_literal) @boolean
-
-(null_literal) @constant
-
-"defined" @constant
-
-(comment) @comment
+] @keyword
 
 [
-  ","
-  "."
-  ":"
-] @punctuation.delimiter
+  "include"
+  "import"
+  "from"
+  "extends"
+  "as"
+] @keyword
 
 [
-  (attribute_ignore)
-  (attribute_context)
-  "recursive"
-] @attribute.builtin
+  "if"
+  "else"
+  "endif"
+  "elif"
+] @keyword
 
 [
-  "("
-  ")"
-  "["
-  "]"
-  "<"
-  ">"
-] @punctuation.bracket
-
-(binary_operator) @operator
+  "for"
+  "in"
+  "continue"
+  "break"
+  "endfor"
+] @keyword
 
 [
   "block"
@@ -62,86 +47,69 @@
   "trans"
   "pluralize"
   "autoescape"
+  "call"
 ] @keyword
 
 [
-  "endtrans"
   "endblock"
   "endwith"
   "endfilter"
   "endmacro"
-  "endcall"
   "endset"
   "endtrans"
+  "endtrans"
   "endautoescape"
+  "endcall"
+] @keyword
+
+[
+  (attribute_ignore)
+  (attribute_context)
+  "recursive"
 ] @keyword
 
 (do_statement
   "do" @keyword)
 
 [
-  "include"
-  "import"
-  "from"
-  "extends"
-  "as"
-] @keyword.import
-
-(import_statement
-  (identifier) @variable)
-
-(import_as
-  (identifier) @variable)
+  ","
+  "."
+  ":"
+] @punctuation.delimiter
 
 [
-  "if"
-  "else"
-  "endif"
-  "elif"
-] @keyword.conditional
+  "("
+  ")"
+  "<"
+  ">"
+] @punctuation.bracket
 
 [
-  "for"
-  "in"
-  "continue"
-  "break"
-  "endfor"
-] @keyword.repeat
+  "["
+  "]"
+] @punctuation.list_marker
 
-"call" @function.call
+(string_literal) @string
 
-(function_call
-  (identifier) @function.call)
+(number_literal) @number
 
-(arg
-  (identifier) @variable.parameter)
+(float_literal) @number
 
-(arg
-  (expression
-    (binary_expression
-      (unary_expression
-        (primary_expression
-          (identifier) @variable.parameter)))))
+(boolean_literal) @boolean
 
-(expression
-  "."
-  (expression)+ @variable.member)
+(null_literal) @constant
 
-(assignment_expression
-  "."
-  (identifier)+ @variable.member)
+(comment) @comment
 
-(inline_trans
-  "_" @function.builtin)
+[
+  (unary_operator)
+  (binary_operator)
+] @operator
 
-"debug" @function.builtin
-
-; TODO: only match raw
-(raw_start) @keyword
-
-(raw_end) @keyword
-
-(raw_body) @markup.raw.block @nospell
+((binary_operator) @keyword
+    (#any-of? @keyword
+    	"|"
+        "is"))
 
 (builtin_test
   [
@@ -173,4 +141,30 @@
     "lt"
     "sameas"
     "upper"
-  ] @keyword.operator)
+  ] @operator)
+
+(inline_trans
+    "_" @function)
+
+"debug" @function
+
+(function_call
+    (identifier) @function)
+
+(function_call
+  (arg
+    (identifier) @attribute))
+
+(import_statement
+    (identifier) @variable)
+
+(import_as
+    (identifier) @variable)
+
+(primary_expression
+    (identifier) @variable)
+
+(raw_block
+    (raw_start) @keyword
+    (raw_body) @embedded
+    (raw_end) @keyword)

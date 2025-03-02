@@ -3,4 +3,6 @@
     (raw_body) @injection.content
     (#set! injection.language "Html")))
 
-; TODO: implement html injection outside of raw blocks
+((words)+ @injection.content
+    (#set! injection.language "Html")
+    (#set! injection.combined "true"))

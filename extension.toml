@@ -1,6 +1,6 @@
 id = "jinja"
 name = "Jinja"
-version = "0.1.0"
+version = "0.2.0"
 schema_version = 1
 authors = ["Leonardo Panseri <leonardo.panseri@gmail.com>"]
 description = "Jinja template language support with jinja-lsp."
@@ -9,7 +9,7 @@ repository = "https://github.com/leonardo-panseri/zed-jinja"
 [grammars.jinja]
 repository = "https://github.com/cathaysia/tree-sitter-jinja"
 path = "tree-sitter-jinja"
-rev = "41b17a33f335130ce9861fd21bffeb88fd768ef4"
+rev = "07a62adf99c0f41e0cab7ab523541309a8d73dc4"
 
 [language_servers.jinja-lsp]
 languages = ["Jinja"]
