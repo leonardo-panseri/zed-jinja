@@ -1,8 +1,8 @@
-(definition
+(source
   (raw_block
     (raw_body) @injection.content
     (#set! injection.language "Html")))
 
-((words)+ @injection.content
+((content)+ @injection.content
     (#set! injection.language "Html")
     (#set! injection.combined "true"))
