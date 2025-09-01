@@ -9,7 +9,7 @@ repository = "https://github.com/leonardo-panseri/zed-jinja"
 [grammars.jinja]
 repository = "https://github.com/cathaysia/tree-sitter-jinja"
 path = "tree-sitter-jinja"
-rev = "129184fb7bbc2d3e29967002432a869ac3758f2e"
+rev = "e589222a1ad44361bc376d5abdccd08e1fecfee5"
 
 [language_servers.jinja-lsp]
 languages = ["Jinja"]
